@@ -1,7 +1,7 @@
 "use client";
 import { login } from "@/lib/user";
 import { useState } from "react";
-import { Button, Form, Input, Title, Container } from "../signup/page";
+import { Button, Form, Input, Title, Container } from "../_components/Styled";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
