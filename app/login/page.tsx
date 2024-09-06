@@ -37,7 +37,7 @@ const Login: React.FC = () => {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <Title>Signup</Title>
+        <Title>Login</Title>
 
         <Input
           type="email"

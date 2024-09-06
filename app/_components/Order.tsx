@@ -12,15 +12,17 @@ export interface UserDetails {
   phone: string;
   address: string;
 }
+
 type User = {
   id: number;
   name: string;
   email: string;
 };
 
-type OrderPageProps = {
-  user: UserDetails | null;
-};
+interface OrderItem {
+  brand: CementBrand;
+  quantity: number;
+}
 
 function UserOrderPage() {
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -32,8 +34,7 @@ function UserOrderPage() {
     address: "",
   });
 
-  const [selectedBrand, setSelectedBrand] = useState<CementBrand>("Dangote");
-  const [quantity, setQuantity] = useState<number>(1);
+  const [selectedBrands, setSelectedBrands] = useState<OrderItem[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const handleUserDetailsChange = (
@@ -46,25 +47,32 @@ function UserOrderPage() {
     });
   };
 
-  const handleBrandChange = (e: ChangeEvent<HTMLSelectElement>): void => {
-    setSelectedBrand(e.target.value as CementBrand);
+  const handleBrandCheckboxChange = (brand: CementBrand): void => {
+    const isSelected = selectedBrands.some((item) => item.brand === brand);
+    if (isSelected) {
+      // Remove brand if already selected
+      setSelectedBrands(selectedBrands.filter((item) => item.brand !== brand));
+    } else {
+      // Add brand if not selected
+      setSelectedBrands([...selectedBrands, { brand, quantity: 1 }]);
+    }
   };
 
-  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newQuantity = Math.max(1, parseInt(e.target.value) || 1);
-    setQuantity(newQuantity);
-  };
-
-  const incrementQuantity = (): void => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
-
-  const decrementQuantity = (): void => {
-    setQuantity((prevQuantity) => Math.max(1, prevQuantity - 1));
+  const handleQuantityChange = (brand: CementBrand, quantity: number): void => {
+    setSelectedBrands((prev) =>
+      prev.map((item) =>
+        item.brand === brand
+          ? { ...item, quantity: Math.max(1, quantity) }
+          : item
+      )
+    );
   };
 
   const validateForm = (): boolean => {
-    return Object.values(userDetails).every((detail) => detail.trim() !== "");
+    return (
+      Object.values(userDetails).every((detail) => detail.trim() !== "") &&
+      selectedBrands.length > 0
+    );
   };
 
   const handleOrderNow = (e: FormEvent): void => {
@@ -72,16 +80,24 @@ function UserOrderPage() {
     if (validateForm()) {
       setIsSubmitted(true);
       alert(
-        `Order placed successfully!\n\nDetails:\nName: ${userDetails.name}\nEmail: ${userDetails.email}\nPhone: ${userDetails.phone}\nAddress: ${userDetails.address}\nBrand: ${selectedBrand}\nQuantity: ${quantity}`
+        `Order placed successfully!\n\nDetails:\nName: ${
+          userDetails.name
+        }\nEmail: ${userDetails.email}\nPhone: ${userDetails.phone}\nAddress: ${
+          userDetails.address
+        }\n\nOrder Items:\n${selectedBrands
+          .map((item) => `${item.brand}: ${item.quantity}`)
+          .join("\n")}`
       );
+      router.push("/payments");
     } else {
-      alert("Please fill out all the details before placing your order.");
+      alert(
+        "Please fill out all the details and select at least one brand before placing your order."
+      );
     }
   };
 
   useEffect(() => {
     setIsloading(true);
-
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -130,7 +146,7 @@ function UserOrderPage() {
 
       <form onSubmit={handleOrderNow}>
         {/* User Details Section */}
-        <main className="flex justify-between flex-col">
+        <main className="flex flex-col gap-6">
           <div className="flex flex-col gap-4">
             <div className="form-group">
               <label htmlFor="name">Name:</label>
@@ -157,9 +173,7 @@ function UserOrderPage() {
                 placeholder="Enter your email"
               />
             </div>
-          </div>
 
-          <div className="flex flex-col gap-4">
             <div className="form-group">
               <label htmlFor="phone">Phone Number:</label>
               <input
@@ -171,6 +185,7 @@ function UserOrderPage() {
                 placeholder="Enter your phone number"
               />
             </div>
+
             {/* Delivery Address Input */}
             <DeliveryAddressInputContainer>
               <label htmlFor="address">Delivery Address:</label>
@@ -183,46 +198,76 @@ function UserOrderPage() {
               />
             </DeliveryAddressInputContainer>
           </div>
+
+          {/* Brand Selection Section */}
+          <div className="brand-selection">
+            <h3>Select Cement Brands:</h3>
+            {["Dangote", "Lafarge", "BUA"].map((brand) => (
+              <div key={brand} className="flex items-center gap-4 mb-4">
+                <input
+                  type="checkbox"
+                  id={brand}
+                  value={brand}
+                  onChange={() =>
+                    handleBrandCheckboxChange(brand as CementBrand)
+                  }
+                  checked={selectedBrands.some((item) => item.brand === brand)}
+                />
+                <label htmlFor={brand}>{brand} Cement</label>
+
+                {/* Quantity Input for Selected Brands */}
+                {selectedBrands.some((item) => item.brand === brand) && (
+                  <div className="quantity-control flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleQuantityChange(
+                          brand as CementBrand,
+                          selectedBrands.find((item) => item.brand === brand)!
+                            .quantity - 1
+                        )
+                      }
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      value={
+                        selectedBrands.find((item) => item.brand === brand)!
+                          .quantity
+                      }
+                      onChange={(e) =>
+                        handleQuantityChange(
+                          brand as CementBrand,
+                          parseInt(e.target.value) || 1
+                        )
+                      }
+                      min="1"
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleQuantityChange(
+                          brand as CementBrand,
+                          selectedBrands.find((item) => item.brand === brand)!
+                            .quantity + 1
+                        )
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Order Button */}
+          <button className="order-button" type="submit">
+            Checkout
+          </button>
         </main>
-
-        {/* Brand Selector */}
-        <article className="flex justify-between flex-col gap-2">
-          <div className="brand-selector">
-            <label htmlFor="brand">Select Cement Brand:</label>
-            <select
-              id="brand"
-              value={selectedBrand}
-              onChange={handleBrandChange}
-            >
-              <option value="Dangote Cement">Dangote Cement</option>
-              <option value="Lafarge Cement">Lafarge Cement</option>
-              <option value="Other Cement Brand">Other Cement Brand</option>
-            </select>
-          </div>
-          {/* Quantity Control */}
-          <div className="quantity-control">
-            <button type="button" onClick={decrementQuantity}>
-              -
-            </button>
-            <input
-              type="number"
-              value={quantity}
-              onChange={handleQuantityChange}
-              min="1"
-            />
-            <button type="button" onClick={incrementQuantity}>
-              +
-            </button>
-          </div>
-        </article>
-
-        {/* Order Button */}
-        <button className="order-button" type="submit">
-          Order Now
-        </button>
       </form>
-
-      {isSubmitted && <p>Thank you for your order!</p>}
     </OrderPageContainer>
   );
 }

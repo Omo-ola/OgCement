@@ -1,23 +1,18 @@
-"use client";
 import React from "react";
-import { Header, Logo, Nav, NavLink, OrderButton } from "./Styled";
 import Link from "next/link";
 
 function Navbar() {
   return (
-    <Header>
-      <Link href={"/"}>
-        <Logo>OgCement</Logo>
+    <nav className="bg-gray-200 p-4 flex items-center justify-between">
+      <div className="flex items-center">
+        <Link href={"/"}>
+          <span className="ml-2 text-xl font-bold">OgCement</span>
+        </Link>
+      </div>
+      <Link href={"/login"}>
+        <button className="bg-blue-500 text-white p-2">Login</button>
       </Link>
-      <Nav>
-        <NavLink href="#about">About Us</NavLink>
-        <NavLink href="#brands">Cement Brands</NavLink>
-        <NavLink href="#pricing">Pricing</NavLink>
-        <OrderButton>
-          <Link href="/order">Order Now</Link>
-        </OrderButton>
-      </Nav>
-    </Header>
+    </nav>
   );
 }
 
