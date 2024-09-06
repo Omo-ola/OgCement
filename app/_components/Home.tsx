@@ -237,9 +237,6 @@ export default function HomePage() {
       </PricingSection>
 
       <FaqSection />
-      <Footer>
-        <FooterText>&copy; 2024 OgCement. All rights reserved.</FooterText>
-      </Footer>
     </>
   );
 }
