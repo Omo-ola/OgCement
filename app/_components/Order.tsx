@@ -35,7 +35,7 @@ function UserOrderPage() {
   });
 
   const [selectedBrands, setSelectedBrands] = useState<OrderItem[]>([]);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
 
   const handleUserDetailsChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -50,10 +50,8 @@ function UserOrderPage() {
   const handleBrandCheckboxChange = (brand: CementBrand): void => {
     const isSelected = selectedBrands.some((item) => item.brand === brand);
     if (isSelected) {
-      // Remove brand if already selected
       setSelectedBrands(selectedBrands.filter((item) => item.brand !== brand));
     } else {
-      // Add brand if not selected
       setSelectedBrands([...selectedBrands, { brand, quantity: 1 }]);
     }
   };
@@ -78,7 +76,6 @@ function UserOrderPage() {
   const handleOrderNow = async (e: FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      setIsSubmitted(true);
       alert(
         `Order placed successfully!\n\nDetails:\nName: ${
           userDetails.name
@@ -97,7 +94,6 @@ function UserOrderPage() {
   };
 
   useEffect(() => {
-    setIsloading(true);
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -124,22 +120,15 @@ function UserOrderPage() {
           address: "",
         };
         setUserDetails(users);
-        setIsloading(false);
       } catch (error) {
         router.push("/login");
-        setIsloading(false);
-      } finally {
         setIsloading(false);
       }
     };
 
     fetchUser();
   }, [router]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+  
   return (
     <OrderPageContainer>
       <h2>Place Your Order</h2>

@@ -1,12 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 function Navbar() {
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("token"));
+  const [loggedIn, setLoggedIn] = useState<string>("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    //@ts-ignore
+    setLoggedIn(token);
+  }, []);
 
   return (
-    <nav className="bg-gray-200 p-4 flex items-center justify-between">
+    <nav className="p-4 flex items-center justify-between z-50">
       <div className="flex items-center">
         <Link href={"/"}>
           <span className="ml-2 text-xl font-bold">Karakat Cement</span>

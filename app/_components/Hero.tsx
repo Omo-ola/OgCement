@@ -4,9 +4,16 @@ import Link from "next/link";
 function Hero() {
   return (
     <section
-      className="relative bg-cover bg-center h-screen flex items-center"
-      style={{ backgroundImage: "url('/header-bg2.jpg')" }}
+      className="bg-cover bg-center h-screen flex items-center relative"
+      // style={{ backgroundImage: "url('/header-bg2.jpg')" }}
     >
+      <Image
+        className="object-cover object-top -z-50"
+        // placeholder="blur"
+        src={"/header-bg2.jpg"}
+        alt="banner image"
+        fill
+      />
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="container mx-auto z-10 relative">
         <div className="text-center text-white">
