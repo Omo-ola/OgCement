@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import WhatsAppContact from "../_components/Bcontact";
+import axios from "axios";
 
 interface UserDetails {
   name: string;
@@ -24,10 +25,7 @@ function CheckoutPage() {
     address: "123 Main St, Anytown, USA",
   });
 
-  const [orderItems, setOrderItems] = useState<OrderItem[]>([
-    { name: "Dangote", quantity: 50, price: 20 },
-    { name: "Lafarge", quantity: 45, price: 25 },
-  ]);
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
 
   const [paymentMethod, setPaymentMethod] = useState<string>("Bank Transfer");
 
@@ -52,12 +50,27 @@ function CheckoutPage() {
     );
   };
 
+  useEffect(() => {
+    async function getCart() {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get(
+        "https://cement-api.onrender.com/api/cart",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setOrderItems(data.data.items);
+    }
+    getCart();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
       <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-2xl font-semibold mb-6">Checkout</h1>
 
-        {/* Order Summary */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
           {orderItems.map((item, index) => (
@@ -72,7 +85,7 @@ function CheckoutPage() {
                 </p>
               </div>
               <div>
-                <p className="text-lg">${item.price * item.quantity}</p>
+                <p className="text-lg">#{item.price * item.quantity}</p>
               </div>
             </div>
           ))}

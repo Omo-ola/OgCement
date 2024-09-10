@@ -22,7 +22,7 @@ function Navbar() {
         <div className="flex justify-center gap-4">
           <Link
             href="/order"
-            className="bg-[var(--bg-accent)] hover:bg-blue-700 text-[var(--bg-grey)] font-bold py-3 px-6 rounded-md transition duration-300"
+            className="bg-[var(--bg-accent)] hover:bg-blue-700 text-[var(--bg-grey)] font-bold py-3 px-6 md:px-4 sm:px-2 rounded-md transition duration-300"
           >
             Shop Now
           </Link>
@@ -31,7 +31,7 @@ function Navbar() {
         <div className="flex justify-center gap-4">
           <Link
             href="/login"
-            className="bg-[var(--bg-accent)] hover:bg-blue-700 text-[var(--bg-grey)] font-bold py-3 px-6 rounded-md transition duration-300"
+            className="bg-[var(--bg-accent)] hover:bg-blue-700 text-[var(--bg-grey)] font-bold py-3 px-6 md:px-4 sm:px-2 rounded-md transition duration-300"
           >
             Login
           </Link>

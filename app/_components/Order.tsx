@@ -36,7 +36,6 @@ function UserOrderPage() {
 
   const [selectedBrands, setSelectedBrands] = useState<OrderItem[]>([]);
 
-
   const handleUserDetailsChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -76,16 +75,39 @@ function UserOrderPage() {
   const handleOrderNow = async (e: FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      alert(
-        `Order placed successfully!\n\nDetails:\nName: ${
-          userDetails.name
-        }\nEmail: ${userDetails.email}\nPhone: ${userDetails.phone}\nAddress: ${
-          userDetails.address
-        }\n\nOrder Items:\n${selectedBrands
-          .map((item) => `${item.brand}: ${item.quantity}`)
-          .join("\n")}`
-      );
-      router.push("/payments");
+      const orderData = {
+        items: selectedBrands.map((item) => {
+          return {
+            name: `${item.brand} Cement`,
+            price: 7000,
+            quantity: item.quantity,
+          };
+        }),
+        address: userDetails.address,
+        phone: userDetails.phone,
+      };
+
+      try {
+        console.log(orderData);
+
+        const token = localStorage.getItem("token");
+        const response = await axios.post(
+          "https://cement-api.onrender.com/api/cart",
+          orderData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+
+        // alert("Order placed successfully!");
+        router.push("/payments");
+      } catch (error) {
+        alert("An error occurred while placing the order. Please try again.");
+        console.error(error);
+      }
     } else {
       alert(
         "Please fill out all the details and select at least one brand before placing your order."
@@ -110,9 +132,17 @@ function UserOrderPage() {
             },
           }
         );
-        const { data: userData } = data;
-        console.log(userData);
+        const { data: test } = await axios.get(
+          "https://cement-api.onrender.com/api/cements",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(test);
 
+        const { data: userData } = data;
         const users = {
           name: userData.name,
           email: userData.email,
@@ -128,7 +158,7 @@ function UserOrderPage() {
 
     fetchUser();
   }, [router]);
-  
+
   return (
     <OrderPageContainer>
       <h2>Place Your Order</h2>

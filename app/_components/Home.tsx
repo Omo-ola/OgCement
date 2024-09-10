@@ -43,7 +43,6 @@ export default function HomePage() {
     const response = await axios.get(
       "https://cement-api.onrender.com/api/cements"
     );
-    console.log(response.data.data);
   }
 
   useEffect(() => {

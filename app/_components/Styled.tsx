@@ -349,8 +349,11 @@ export const Form = styled.form`
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  /* max-width: 400px; */
   width: 100%;
+  background: var(--bg-grey);
+  position: relative;
+  height: 100vh;
 `;
 
 export const Title = styled.h2`

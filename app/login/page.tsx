@@ -35,35 +35,39 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <Title>Login</Title>
-
-        <Input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-
-        <Input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+    <Form onSubmit={handleSubmit}>
+      <div className="one">
+        <article className="text-center text-3xl">
+          <Title>Login</Title>
+        </article>
+        <div className="com">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="com">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
         <Button type="submit">Login</Button>
         <div>
           <p>
             Dont have an account yet? <Link href={"/signup"}>Register</Link>
           </p>
         </div>
-      </Form>
-    </Container>
+      </div>
+    </Form>
   );
 };
 

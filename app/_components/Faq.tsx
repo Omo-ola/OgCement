@@ -37,30 +37,15 @@ export default function FaqSection() {
           </p>
 
           <div className="space-y-4">
+
             <div
               className="p-4 rounded-md cursor-pointer"
               onClick={() => toggleFaq(0)}
             >
               <h4 className="font-semibold text-lg mb-2 bg-yellow-500 px-2 rounded-md">
-                - Who has access to my personal information
-              </h4>
-              {openFaqIndex === 0 && (
-                <p className="transition-all duration-200 px-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Dolore omnis quaerat nostrum, pariatur ipsam sunt accusamus
-                  enim necessitatibus est.
-                </p>
-              )}
-            </div>
-
-            <div
-              className="p-4 rounded-md cursor-pointer"
-              onClick={() => toggleFaq(1)}
-            >
-              <h4 className="font-semibold text-lg mb-2 bg-yellow-500 px-2 rounded-md">
                 - We are always careful to our clients and service
               </h4>
-              {openFaqIndex === 1 && (
+              {openFaqIndex === 0 && (
                 <p className="transition-all duration-200 px-4">
                   We always take care of our clients and provide top-notch
                   service to ensure complete satisfaction.
@@ -70,12 +55,12 @@ export default function FaqSection() {
 
             <div
               className="  p-4 rounded-md  cursor-pointer"
-              onClick={() => toggleFaq(2)}
+              onClick={() => toggleFaq(1)}
             >
               <h4 className="font-semibold text-lg mb-2 bg-yellow-500 px-2 rounded-md">
                 - How to get the best use of these services?
               </h4>
-              {openFaqIndex === 2 && (
+              {openFaqIndex === 1 && (
                 <p className="transition-all duration-200 px-4">
                   To get the best out of our services, please contact our
                   support team for personalized guidance.

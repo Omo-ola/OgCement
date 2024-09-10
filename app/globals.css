@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
 @layer components {
   .spinner {
     margin: 3.2rem auto 1.6rem;
@@ -33,7 +29,6 @@
     }
   }
 }
-
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -66,4 +61,60 @@ p {
 footer {
   background-color: var(--footer);
   color: var(--bg-grey);
+}
+
+/* .sect {
+  background: var(--bg-grey);
+  position: relative;
+  height: 100vh;
+} */
+.one {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  background-color: rgb(219, 218, 218);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 5px solid rgb(233, 228, 228);
+  border-right: none;
+  border-bottom: none;
+  border-radius: 15px;
+  box-shadow: 0 15px 15px rgba(138, 134, 134, 0.6);
+
+
+ @media (max-width: 568px) {
+    width: 90%;
+  }
+  
+  button[type="submit"] {
+    padding: 10px;
+    width: 100%;
+    border-radius: 40px;
+    margin: 20px auto;
+    background-color: var(--bg-accent);
+    border: 2px solid white;
+    box-shadow: 0 5px 15px rgb(56, 53, 53, 0.6);
+    font-size: large;
+  }
+  p {
+    letter-spacing: -0.7px;
+    margin-top: 15px;
+    padding: 5px;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+  }
+}
+
+.com input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgb(58, 56, 56, 0.6);
+  border-radius: 1px;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  background-color: transparent;
 }
