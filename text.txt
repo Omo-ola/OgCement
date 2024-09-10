@@ -1,0 +1,36 @@
+Primary Color (Banner/Buttons/Highlights):
+Hex: #FFA500
+Description: A bright, construction-inspired orange, representing energy and urgency.
+
+Secondary Color (Background/Sections):
+Hex: #F2F2F2
+Description: A light gray for background sections, creating a neutral and clean space for text and images to stand out.
+
+Accent Color (Icons/Details):
+Hex: #007BFF
+Description: A vibrant blue used for small accents like icons and calls to action, creating a sense of trust and professionalism.
+
+Text Color (Headings):
+Hex: #333333
+Description: A dark charcoal gray for headings and key text elements, ensuring readability and contrast against the lighter backgrounds.
+
+Body Text Color:
+Hex: #555555
+Description: A medium gray, softer than black, used for paragraph text, ensuring a pleasant reading experience.
+
+Footer Background Color:
+Hex: #1A1A1A
+Description: A deep black or dark gray, giving the footer a sleek, minimalistic look with light text
+
+
+
+
+
+Hero banner -
+
+Buy Cement Online
+Fast, Easy, Reliable
+
+Discover the convenience of purchasing high-quality cement from the comfort of your home. Enjoy unbeatable prices, swift delivery, and a wide range of products tailored to your construction needs.
+
+[Shop Now]

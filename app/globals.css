@@ -6,17 +6,31 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --bg-grey: #f2f2f2;
+  --bg-yellow: #ffa500;
+  --bg-accent: #007bff;
+  --txt-heading: #333333;
+  --txt-body: #555555;
+  --footer: #1a1a1a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body {
+  background-color: var(--bg-grey);
 }
 
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--txt-heading);
+}
 
+p {
+  color: var(--txt-body);
+}
 
-
-
+footer {
+  background-color: var(--footer);
+  color: var(--bg-grey);
+}

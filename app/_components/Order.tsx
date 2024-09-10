@@ -75,7 +75,7 @@ function UserOrderPage() {
     );
   };
 
-  const handleOrderNow = (e: FormEvent): void => {
+  const handleOrderNow = async (e: FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitted(true);
@@ -264,7 +264,7 @@ function UserOrderPage() {
 
           {/* Order Button */}
           <button className="order-button" type="submit">
-            Checkout
+            Add to cart
           </button>
         </main>
       </form>

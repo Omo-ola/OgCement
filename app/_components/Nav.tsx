@@ -9,17 +9,27 @@ function Navbar() {
     <nav className="bg-gray-200 p-4 flex items-center justify-between">
       <div className="flex items-center">
         <Link href={"/"}>
-          <span className="ml-2 text-xl font-bold">OgCement</span>
+          <span className="ml-2 text-xl font-bold">Karakat Cement</span>
         </Link>
       </div>
       {loggedIn ? (
-        <Link href={"/order"}>
-          <button className="bg-blue-500 text-white p-2">Order</button>
-        </Link>
+        <div className="flex justify-center gap-4">
+          <Link
+            href="/order"
+            className="bg-[var(--bg-accent)] hover:bg-blue-700 text-[var(--bg-grey)] font-bold py-3 px-6 rounded-md transition duration-300"
+          >
+            Shop Now
+          </Link>
+        </div>
       ) : (
-        <Link href={"/login"}>
-          <button className="bg-blue-500 text-white p-2">Login</button>
-        </Link>
+        <div className="flex justify-center gap-4">
+          <Link
+            href="/login"
+            className="bg-[var(--bg-accent)] hover:bg-blue-700 text-[var(--bg-grey)] font-bold py-3 px-6 rounded-md transition duration-300"
+          >
+            Login
+          </Link>
+        </div>
       )}
     </nav>
   );

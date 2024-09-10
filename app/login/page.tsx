@@ -56,7 +56,7 @@ const Login: React.FC = () => {
           onChange={handleChange}
           required
         />
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit">Login</Button>
         <div>
           <p>
             Dont have an account yet? <Link href={"/signup"}>Register</Link>
