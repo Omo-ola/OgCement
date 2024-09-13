@@ -29,6 +29,8 @@ const Login: React.FC = () => {
       const res = await login(formData);
       console.log(res);
       if (res.success === true) {
+        const token = localStorage.getItem("token");
+        if (token) localStorage.removeItem("token");
         localStorage.setItem("token", res.token);
         router.push("/order");
       }

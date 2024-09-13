@@ -25,7 +25,6 @@ interface OrderItem {
 }
 
 function UserOrderPage() {
-  const [isLoading, setIsloading] = useState<boolean>(false);
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetails>({
     name: "",
@@ -130,16 +129,6 @@ function UserOrderPage() {
             },
           }
         );
-        const { data: test } = await axios.get(
-          "https://cement-api.onrender.com/api/cements",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(test);
-
         const { data: userData } = data;
         const users = {
           name: userData.name,
@@ -150,7 +139,6 @@ function UserOrderPage() {
         setUserDetails(users);
       } catch (error) {
         router.push("/login");
-        setIsloading(false);
       }
     };
 

@@ -8,22 +8,20 @@ import { formatCurrency } from "@/lib/helper";
 interface UserDetails {
   name: string;
   email: string;
-  phoneNumber: string;
-  address: string;
 }
 
 interface OrderItem {
   name: string;
   quantity: number;
   price: number;
+  phoneNumber: string;
+  address: string;
 }
 
 function CheckoutPage() {
   const [userDetails, setUserDetails] = useState<UserDetails>({
     name: "",
     email: "",
-    phoneNumber: "",
-    address: "",
   });
 
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
@@ -39,9 +37,13 @@ function CheckoutPage() {
     setPaymentMethod(e.target.value);
   };
 
-  const handlePlaceOrder = (e: FormEvent) => {
+  const handlePlaceOrder = async (e: FormEvent) => {
     e.preventDefault();
-    alert("Order placed successfully!");
+    const response = await axios.post(
+      `https://cement-api.onrender.com/api/order`
+    );
+    console.log(response);
+    alert("Successful");
   };
 
   const calculateTotal = () => {
@@ -54,17 +56,32 @@ function CheckoutPage() {
   useEffect(() => {
     async function getCart() {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "https://cement-api.onrender.com/api/cart",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(data);
+      try {
+        const { data: loginUser } = await axios.get(
+          "https://cement-api.onrender.com/api/auth/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setUserDetails(loginUser.data);
+        const { data } = await axios.get(
+          "https://cement-api.onrender.com/api/cart",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      setOrderItems(data.data.items);
+        setOrderItems(data.data.items);
+      } catch (error) {
+        // @ts-ignore
+        if (error.response.data.error.includes("No cart found"))
+          setOrderItems([]);
+        else throw new Error("Something went wrong");
+      }
     }
     getCart();
   }, []);
@@ -76,6 +93,7 @@ function CheckoutPage() {
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+          {orderItems.length < 1 && <p className="">No item in your cart</p>}
           {orderItems.map((item, index) => (
             <div
               key={index}
@@ -125,7 +143,7 @@ function CheckoutPage() {
             <input
               type="tel"
               name="phone"
-              value={userDetails.phoneNumber}
+              value={orderItems[0]?.phoneNumber}
               onChange={handleUserDetailsChange}
               placeholder="Phone Number"
               className="p-2 border rounded-md"
@@ -133,7 +151,7 @@ function CheckoutPage() {
             <input
               type="text"
               name="address"
-              value={userDetails.address}
+              value={orderItems[0]?.address}
               onChange={handleUserDetailsChange}
               placeholder="Delivery Address"
               className="p-2 border rounded-md col-span-2"

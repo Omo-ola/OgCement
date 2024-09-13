@@ -1,4 +1,3 @@
-// "use client";
 import Hero from "./Hero";
 import Image from "next/image";
 import { TbWorldSearch } from "react-icons/tb";
