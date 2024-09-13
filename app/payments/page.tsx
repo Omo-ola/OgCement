@@ -3,11 +3,12 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import WhatsAppContact from "../_components/Bcontact";
 import axios from "axios";
+import { formatCurrency } from "@/lib/helper";
 
 interface UserDetails {
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
 }
 
@@ -19,10 +20,10 @@ interface OrderItem {
 
 function CheckoutPage() {
   const [userDetails, setUserDetails] = useState<UserDetails>({
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "1234567890",
-    address: "123 Main St, Anytown, USA",
+    name: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
   });
 
   const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
@@ -61,6 +62,8 @@ function CheckoutPage() {
           },
         }
       );
+      console.log(data);
+
       setOrderItems(data.data.items);
     }
     getCart();
@@ -85,13 +88,17 @@ function CheckoutPage() {
                 </p>
               </div>
               <div>
-                <p className="text-lg">#{item.price * item.quantity}</p>
+                <p className="text-lg">
+                  {formatCurrency(item.price * item.quantity)}
+                </p>
               </div>
             </div>
           ))}
           <div className="flex justify-between items-center py-4 mt-4 border-t">
             <h3 className="text-lg font-semibold">Total</h3>
-            <p className="text-lg font-bold">${calculateTotal()}</p>
+            <p className="text-lg font-bold">
+              {formatCurrency(calculateTotal())}
+            </p>
           </div>
         </div>
 
@@ -118,7 +125,7 @@ function CheckoutPage() {
             <input
               type="tel"
               name="phone"
-              value={userDetails.phone}
+              value={userDetails.phoneNumber}
               onChange={handleUserDetailsChange}
               placeholder="Phone Number"
               className="p-2 border rounded-md"

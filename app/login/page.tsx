@@ -25,12 +25,15 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    const res = await login(formData);
-    console.log(res);
-    if (res.success === true) {
-      localStorage.setItem("token", res.token);
-      router.push("/order");
+    try {
+      const res = await login(formData);
+      console.log(res);
+      if (res.success === true) {
+        localStorage.setItem("token", res.token);
+        router.push("/order");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

@@ -1,7 +1,5 @@
-"use client";
+// "use client";
 import Hero from "./Hero";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import { TbWorldSearch } from "react-icons/tb";
 
@@ -14,6 +12,7 @@ import { GrDeliver } from "react-icons/gr";
 import dangote from "@/public/screen_light_1.png";
 import lafarge from "@/public/screen_light_2.png";
 import other from "@/public/screen_light_3.png";
+import Link from "next/link";
 
 export default function HomePage() {
   const services = [
@@ -39,20 +38,10 @@ export default function HomePage() {
     },
   ];
 
-  async function fetchData() {
-    const response = await axios.get(
-      "https://cement-api.onrender.com/api/cements"
-    );
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <>
       <Hero />
-      <section className="py-16 bg-[var(--bg-grey)] px-6 text-center">
+      <section className="py-16 bg-[var(--bg-grey)] px-6 text-center md:max-w-[70%] mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-[var( --txt-heading)]">
           How it works
         </h2>
@@ -73,7 +62,7 @@ export default function HomePage() {
 
       {/* <Brand /> */}
 
-      <section className="py-16">
+      <section className="py-16 ">
         <h2 className="text-3xl font-bold mb-6 text-[var( --txt-heading)] text-center">
           Why chose us ?
         </h2>
@@ -178,17 +167,17 @@ export default function HomePage() {
                 <span className="ml-2">Excellent Customer Support</span>
               </li>
             </ul>
-            <a
+            <Link
               href="/"
               className="bg-[var(--bg-accent)] hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md transition duration-300"
             >
               Read More
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-[var(--bg-grey)] px-6">
+      <section className="py-16 bg-[var(--bg-grey)] px-6 md:max-w-[70%] mx-auto">
         <h2 className="text-3xl font-bold mb-6 text-[var( --txt-heading)] text-center">
           Featured Product
         </h2>

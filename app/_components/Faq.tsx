@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import image2 from "@/public/faq-img1.jpg";
+import image2 from "@/public/Cement2.jpg";
 import Image from "next/image";
 
 export default function FaqSection() {

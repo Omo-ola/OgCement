@@ -15,7 +15,7 @@ function Hero() {
         fill
       />
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="container mx-auto z-10 relative">
+      <div className="container mx-auto z-10 relative md:max-w-[70%]">
         <div className="text-center text-white">
           <h2 className="text-[var(--bg-yellow)] font-semibold text-lg mb-2">
             Builders Know Our Product Well

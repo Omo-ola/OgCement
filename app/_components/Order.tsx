@@ -9,7 +9,7 @@ type CementBrand = "Dangote" | "Lafarge" | "BUA";
 export interface UserDetails {
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
 }
 
@@ -30,7 +30,7 @@ function UserOrderPage() {
   const [userDetails, setUserDetails] = useState<UserDetails>({
     name: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     address: "",
   });
 
@@ -51,7 +51,7 @@ function UserOrderPage() {
     if (isSelected) {
       setSelectedBrands(selectedBrands.filter((item) => item.brand !== brand));
     } else {
-      setSelectedBrands([...selectedBrands, { brand, quantity: 1 }]);
+      setSelectedBrands([...selectedBrands, { brand, quantity: 0 }]);
     }
   };
 
@@ -59,7 +59,7 @@ function UserOrderPage() {
     setSelectedBrands((prev) =>
       prev.map((item) =>
         item.brand === brand
-          ? { ...item, quantity: Math.max(1, quantity) }
+          ? { ...item, quantity: Math.max(0, quantity) }
           : item
       )
     );
@@ -81,15 +81,13 @@ function UserOrderPage() {
             name: `${item.brand} Cement`,
             price: 7000,
             quantity: item.quantity,
+            address: userDetails.address,
+            phoneNumber: userDetails.phoneNumber,
           };
         }),
-        address: userDetails.address,
-        phone: userDetails.phone,
       };
 
       try {
-        console.log(orderData);
-
         const token = localStorage.getItem("token");
         const response = await axios.post(
           "https://cement-api.onrender.com/api/cart",
@@ -146,7 +144,7 @@ function UserOrderPage() {
         const users = {
           name: userData.name,
           email: userData.email,
-          phone: "",
+          phoneNumber: "",
           address: "",
         };
         setUserDetails(users);
@@ -194,12 +192,12 @@ function UserOrderPage() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Phone Number:</label>
+              <label htmlFor="phoneNumber">Phone Number:</label>
               <input
                 type="tel"
-                id="phone"
-                name="phone"
-                value={userDetails.phone}
+                id="phoneNumber"
+                name="phoneNumber"
+                value={userDetails.phoneNumber}
                 onChange={handleUserDetailsChange}
                 placeholder="Enter your phone number"
               />
